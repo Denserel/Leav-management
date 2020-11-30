@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30709.64
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leav-management", "Leav-management\Leav-management.csproj", "{647C5F9F-DEE8-410D-B498-A3FB15931243}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{647C5F9F-DEE8-410D-B498-A3FB15931243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647C5F9F-DEE8-410D-B498-A3FB15931243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647C5F9F-DEE8-410D-B498-A3FB15931243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647C5F9F-DEE8-410D-B498-A3FB15931243}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {586CCD93-0694-4DB9-9F0B-588547D4B9B1}
+	EndGlobalSection
+EndGlobal
