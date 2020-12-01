@@ -43,6 +43,11 @@ namespace Leav_management.Repository
             throw new NotImplementedException();
         }
 
+        public bool isExists(int id)
+        {
+            return context.LeaveTypes.Any(x => x.Id == id);
+        }
+
         public bool Save()
         {
             return context.SaveChanges() > 0;
