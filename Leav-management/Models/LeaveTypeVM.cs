@@ -11,6 +11,10 @@ namespace Leav_management.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        [Required]
+        [Range(1, 60, ErrorMessage = "Pleas enter a valid number of dayes")]
+        [Display(Name = "Default Number Of Dayes")]
+        public int DefaultDays { get; set; }
         [Display(Name = "Created")]
         public DateTime? DateCreated { get; set; }
     }
