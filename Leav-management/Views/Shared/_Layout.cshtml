@@ -36,7 +36,10 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="" asp-action="">Apply for leave</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="LeaveHistory" asp-action="Create">Apply for leave</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="LeaveHistory" asp-action="MyLeave">My Leave</a>
                             </li>
 
                             @if (User.IsInRole("Administrator"))
@@ -48,7 +51,7 @@
                                     <div class="dropdown-menu bg-white" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item text-dark" asp-controller="LeaveTypes" asp-action="Index">Leave Types</a>
                                         <a class="dropdown-item text-dark" asp-controller="LeaveAllocation" asp-action="Index">Leav Allocation</a>
-                                        <a class="dropdown-item text-dark" href="#">Leave Application</a>
+                                        <a class="dropdown-item text-dark" asp-controller="LeaveHistory" asp-action="Index">Leave Requests</a>
                                         <a class="dropdown-item text-dark" asp-controller="LeaveAllocation" asp-action="ListEmployees">Employees</a>
                                     </div>
                                 </li>

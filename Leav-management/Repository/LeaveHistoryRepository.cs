@@ -1,5 +1,6 @@
 ﻿using Leav_management.Contracts;
 using Leav_management.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +30,28 @@ namespace Leav_management.Repository
 
         public ICollection<LeaveHistory> FindAll()
         {
-            return context.LeaveHistories.ToList();
+            return context.LeaveHistories
+                .Include(q => q.RequestingEmployee)
+                .Include(q => q.ApprovedBy)
+                .Include(q => q.LeaveType)
+                .ToList();
         }
 
         public LeaveHistory FindById(int id)
         {
-            return context.LeaveHistories.Find(id);
+            return context.LeaveHistories
+                .Include(q => q.RequestingEmployee)
+                .Include(q => q.ApprovedBy)
+                .Include(q => q.LeaveType)
+                .FirstOrDefault(q => q.Id == id);
+        }
+
+        public ICollection<LeaveHistory> GetLeaveHistoriesByEmployee(string employeeId)
+        {
+            return FindAll()
+                .Where(q => q.RequestingEmployeeId == employeeId)
+                .ToList();
+
         }
 
         public bool isExists(int id)
