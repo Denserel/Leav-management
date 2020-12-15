@@ -1,5 +1,6 @@
 ﻿using Leav_management.Contracts;
 using Leav_management.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,47 +17,48 @@ namespace Leav_management.Repository
             this.context = context;
         }
 
-        public bool Create(LeaveType entity)
+        public async Task<bool> Create(LeaveType entity)
         {
-            context.LeaveTypes.Add(entity);
-            return Save();
+            await context.LeaveTypes.AddAsync(entity);
+            return await Save();
         }
 
-        public bool Delete(LeaveType entity)
+        public async Task<bool> Delete(LeaveType entity)
         {
             context.LeaveTypes.Remove(entity);
-            return Save();
+            return await Save();
         }
-
-        public ICollection<LeaveType> FindAll()
+        public async Task<bool> Update(LeaveType entity)
         {
-            return context.LeaveTypes.ToList();
+            context.LeaveTypes.Update(entity);
+            return await Save();
         }
 
-        public LeaveType FindById(int id)
+        public async Task<ICollection<LeaveType>> FindAll()
         {
-            return context.LeaveTypes.Find(id);
+            return await context.LeaveTypes.ToListAsync();
         }
 
-        public ICollection<LeaveType> GetEmployeesByLeaveType(int id)
+        public async Task<LeaveType> FindById(int id)
+        {
+            return await context.LeaveTypes.FindAsync(id);
+        }
+
+        public async Task<ICollection<LeaveType>> GetEmployeesByLeaveType(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool isExists(int id)
+        public async Task<bool> isExists(int id)
         {
-            return context.LeaveTypes.Any(x => x.Id == id);
+            return await context.LeaveTypes.AnyAsync(x => x.Id == id);
         }
 
-        public bool Save()
+        public async Task<bool> Save()
         {
-            return context.SaveChanges() > 0;
+            return await context.SaveChangesAsync() > 0;
         }
 
-        public bool Update(LeaveType entity)
-        {
-            context.LeaveTypes.Update(entity);
-            return Save();
-        }
+        
     }
 }

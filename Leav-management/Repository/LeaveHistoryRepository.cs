@@ -16,58 +16,60 @@ namespace Leav_management.Repository
         {
             this.context = context;
         }
-        public bool Create(LeaveHistory entity)
+        public async Task<bool> Create(LeaveHistory entity)
         {
-            context.LeaveHistories.Add(entity);
-            return Save();
+            await context.LeaveHistories.AddAsync(entity);
+            return await Save();
         }
 
-        public bool Delete(LeaveHistory entity)
+        public async Task<bool> Delete(LeaveHistory entity)
         {
             context.LeaveHistories.Remove(entity);
-            return Save();
+            return await Save();
         }
 
-        public ICollection<LeaveHistory> FindAll()
+        public async Task<ICollection<LeaveHistory>> FindAll()
         {
-            return context.LeaveHistories
+            return await context.LeaveHistories
                 .Include(q => q.RequestingEmployee)
                 .Include(q => q.ApprovedBy)
                 .Include(q => q.LeaveType)
-                .ToList();
+                .ToListAsync();
         }
 
-        public LeaveHistory FindById(int id)
+        public async Task<LeaveHistory> FindById(int id)
         {
-            return context.LeaveHistories
+            return await context.LeaveHistories
                 .Include(q => q.RequestingEmployee)
                 .Include(q => q.ApprovedBy)
                 .Include(q => q.LeaveType)
-                .FirstOrDefault(q => q.Id == id);
+                .FirstOrDefaultAsync(q => q.Id == id);
         }
 
-        public ICollection<LeaveHistory> GetLeaveHistoriesByEmployee(string employeeId)
+        public async Task<ICollection<LeaveHistory>> GetLeaveHistoriesByEmployee(string employeeId)
         {
-            return FindAll()
+            return await context.LeaveHistories
+                .Include(q => q.RequestingEmployee)
+                .Include(q => q.ApprovedBy)
+                .Include(q => q.LeaveType)
                 .Where(q => q.RequestingEmployeeId == employeeId)
-                .ToList();
-
+                .ToListAsync();
         }
 
-        public bool isExists(int id)
+        public async Task<bool> isExists(int id)
         {
-            return context.LeaveHistories.Any(x => x.Id == id);
+            return await context.LeaveHistories.AnyAsync(x => x.Id == id);
         }
 
-        public bool Save()
+        public async Task<bool> Save()
         {
-            return context.SaveChanges() > 0;
+            return await context.SaveChangesAsync() > 0;
         }
 
-        public bool Update(LeaveHistory entity)
+        public async Task<bool> Update(LeaveHistory entity)
         {
             context.LeaveHistories.Update(entity);
-            return Save();
+            return await Save();
         }
     }
 }

@@ -26,22 +26,24 @@ namespace Leav_management.Controllers
         }
 
         // GET: LeaveTypesController
-        public ActionResult Index()
+        public async Task <ActionResult> Index()
         {
-            var leaveTypes = _repository.FindAll().ToList();
-            var model = _mapper.Map<List<LeaveType>, List<LeaveTypeVM>>(leaveTypes);
+            var leaveTypes = await _repository.FindAll();
+            var model = _mapper.Map<List<LeaveType>, List<LeaveTypeVM>>(leaveTypes.ToList());
             return View(model);
         }
 
         // GET: LeaveTypesController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            if (!_repository.isExists(id))
+            var exists = await _repository.isExists(id);
+
+            if (!exists)
             {
                 return NotFound();
             }
 
-            var leavType = _repository.FindById(id);
+            var leavType = await _repository.FindById(id);
             var model = _mapper.Map<LeaveTypeVM>(leavType);
 
             return View(model);
@@ -56,7 +58,7 @@ namespace Leav_management.Controllers
         // POST: LeaveTypesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(LeaveTypeVM model)
+        public async Task<ActionResult> Create(LeaveTypeVM model)
         {
             try
             {
@@ -68,7 +70,7 @@ namespace Leav_management.Controllers
                 var leaveType = _mapper.Map<LeaveType>(model);
                 leaveType.DateCreated = DateTime.Now;
                 
-                var isSuccess = _repository.Create(leaveType);
+                var isSuccess = await _repository.Create(leaveType);
                 if (!isSuccess)
                 {
                     ModelState.AddModelError("", "Something went wrong");
@@ -85,14 +87,16 @@ namespace Leav_management.Controllers
         }
 
         // GET: LeaveTypesController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            if (!_repository.isExists(id))
+            var exixts = await _repository.isExists(id);
+
+            if (!exixts)
             {
                 return NotFound();
             }
             
-            var leavType = _repository.FindById(id);
+            var leavType = await _repository.FindById(id);
             var model = _mapper.Map<LeaveTypeVM>(leavType);
 
             return View(model);
@@ -101,7 +105,7 @@ namespace Leav_management.Controllers
         // POST: LeaveTypesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(LeaveTypeVM model)
+        public async Task<ActionResult> Edit(LeaveTypeVM model)
         {
             try
             {
@@ -111,8 +115,9 @@ namespace Leav_management.Controllers
                 }
 
                 var leaveType = _mapper.Map<LeaveType>(model);
-                
-                var isSuccess = _repository.Update(leaveType);
+
+                var isSuccess = await _repository.Update(leaveType);
+               
                 if (!isSuccess)
                 {
                     ModelState.AddModelError("", "Something went wrong");
@@ -128,18 +133,20 @@ namespace Leav_management.Controllers
         }
 
         // GET: LeaveTypesController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            var exists = await _repository.isExists(id);
+
             try
             {
-                if (!_repository.isExists(id))
+                if (!exists)
                 {
                     return NotFound();
                 }
 
-                var leavType = _repository.FindById(id);
+                var leavType = await _repository.FindById(id);
 
-                var isSuccess = _repository.Delete(leavType);
+                var isSuccess = await _repository.Delete(leavType);
                 if (!isSuccess)
                 {
                     return BadRequest();
